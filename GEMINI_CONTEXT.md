@@ -11,6 +11,8 @@ The project follows a modular, layered architecture.
 ### Directory Structure
 ```
 casino-data-process-api/
+├── docs/                 # Documentation
+│   └── modules/          # Detailed documentation for each module
 ├── src/
 │   ├── config/           # Configuration (DB, Env vars)
 │   ├── core/             # Core utilities (Logger, Error Handler, Response Builder)
@@ -26,6 +28,8 @@ casino-data-process-api/
 │   └── server.js         # Entry point
 ├── .env                  # Environment variables (GitIgnored)
 ├── .env.example          # Example environment variables
+├── .gitignore            # Git ignore rules
+├── GEMINI.md             # Agent instructions and role definition
 └── package.json          # Dependencies
 ```
 
@@ -49,6 +53,10 @@ Each module typically consists of:
 ### 4. Error Handling
 Global error handling middleware is implemented in `src/core/errorHandler.js`. All errors should be passed to `next(error)` in controllers.
 
+## Documentation
+- **Module Details**: Detailed documentation for each module (Auth, Sites, Systems, Connections, ImportTypes, ProcessControl) can be found in `docs/modules/`.
+- **Agent Instructions**: See `GEMINI.md` for the agent's role and operational guidelines.
+
 ## Modules Description
 
 - **Auth**: Handles user authentication (currently a skeleton `POST /auth/login`).
@@ -59,7 +67,7 @@ Global error handling middleware is implemented in `src/core/errorHandler.js`. A
 - **ProcessControl**: Logs and monitors the status of data processing jobs (`date`, `status`, `message`).
 
 ## Running the Project
-1.  Ensure SQL Server is running and accessible.
+1.  Ensure SQL Server is running and accessible (TCP/IP enabled on port 1433).
 2.  Configure `.env` with correct DB credentials.
 3.  `npm install`
 4.  `npm run dev` (uses nodemon)
