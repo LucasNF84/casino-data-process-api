@@ -11,32 +11,44 @@ const Connection = sequelize.define('Connection', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    engine: {
-        type: DataTypes.STRING, // mssql, postgres, oracle, mysql
-        allowNull: false,
-    },
-    host: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    port: {
+    systemId: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    username: {
+    dbhost: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
-    password: {
+    dbname: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
-    database: {
+    dbuser: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
+    },
+    dbpassword: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    dbport: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
+    apiuser: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    apipassword: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    apibase_url: {
+        type: DataTypes.STRING,
+        allowNull: true,
     },
 }, {
-    tableName: 'Connections',
+    tableName: 'Connection',
     timestamps: true,
 });
 

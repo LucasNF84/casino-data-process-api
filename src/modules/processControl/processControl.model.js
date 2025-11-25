@@ -15,21 +15,30 @@ const ProcessControl = sequelize.define('ProcessControl', {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    date: {
+    systemNumberId: {
+        type: DataTypes.INTEGER,
+        allowNull: true, // Nullable if not always linked? Diagram shows link.
+    },
+    dateProcess: {
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: DataTypes.NOW,
     },
+    referenceDate: {
+        type: DataTypes.DATEONLY, // Usually reference date is just a date
+        allowNull: true,
+    },
     status: {
         type: DataTypes.STRING,
         allowNull: false,
+        defaultValue: 'Pending',
     },
     message: {
         type: DataTypes.STRING,
         allowNull: true,
     },
 }, {
-    tableName: 'ProcessControl',
+    tableName: 'Import', // Diagram says 'import (stg)'
     timestamps: true,
 });
 

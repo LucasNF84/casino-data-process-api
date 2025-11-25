@@ -5,8 +5,12 @@ const morgan = require('morgan');
 const routes = require('./routes');
 const errorHandler = require('./core/errorHandler');
 const { error } = require('./core/responseBuilder');
+const defineAssociations = require('./core/associations');
 
 const app = express();
+
+// Initialize Associations
+defineAssociations();
 
 // Middlewares
 app.use(helmet());

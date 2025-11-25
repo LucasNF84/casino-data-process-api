@@ -8,12 +8,15 @@ Manages database connection strings and credentials for different engines.
 |-------|------|-------------|
 | `id` | INTEGER | Primary Key, Auto-increment |
 | `name` | STRING | Connection name |
-| `engine` | STRING | Database engine (mssql, postgres, oracle, mysql) |
-| `host` | STRING | Database host |
-| `port` | INTEGER | Database port |
-| `username` | STRING | Database username |
-| `password` | STRING | Database password |
-| `database` | STRING | Database name |
+| `systemId` | INTEGER | Foreign Key to System |
+| `dbhost` | STRING | Database host |
+| `dbname` | STRING | Database name |
+| `dbuser` | STRING | Database username |
+| `dbpassword` | STRING | Database password |
+| `dbport` | INTEGER | Database port |
+| `apiuser` | STRING | API username (if applicable) |
+| `apipassword` | STRING | API password (if applicable) |
+| `apibase_url` | STRING | API Base URL (if applicable) |
 
 ## Components
 

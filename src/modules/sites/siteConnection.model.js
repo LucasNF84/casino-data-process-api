@@ -1,24 +1,23 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
 
-const ImportType = sequelize.define('ImportType', {
+const SiteConnection = sequelize.define('SiteConnection', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
-    name: {
-        type: DataTypes.STRING,
+    siteId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
     },
-    code: {
-        type: DataTypes.STRING,
+    connectionId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
-        unique: true,
     },
 }, {
-    tableName: 'ImportType', // Diagram says 'importType (stg)'
+    tableName: 'SiteConnection',
     timestamps: true,
 });
 
-module.exports = ImportType;
+module.exports = SiteConnection;

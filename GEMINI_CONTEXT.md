@@ -60,11 +60,13 @@ Global error handling middleware is implemented in `src/core/errorHandler.js`. A
 ## Modules Description
 
 - **Auth**: Handles user authentication (currently a skeleton `POST /auth/login`).
-- **Sites**: Manages casino locations (`id`, `name`, `connectionId`, etc.).
-- **Systems**: Defines external systems interacting with the DW (`id`, `name`, `systemCode`).
-- **Connections**: Stores database connection details for different engines (`mssql`, `postgres`, etc.).
-- **ImportTypes**: Defines types of data imports (e.g., 'ETL', 'Ticket').
-- **ProcessControl**: Logs and monitors the status of data processing jobs (`date`, `status`, `message`).
+- **Sites**: Manages casino locations (`id`, `name`, `businessKey`, `enabled`, etc.).
+- **Systems**: Defines external systems (`id`, `name`, `code`).
+- **Connections**: Stores database connection details (`dbhost`, `dbname`, `dbuser`, etc.) linked to a System.
+- **SiteConnection**: Links Sites to Connections (Many-to-Many relationship).
+- **SystemNumber**: Configuration for specific system instances per site connection (`number`, `daysBack`, `daysForward`).
+- **ImportTypes**: Defines types of data imports (`id`, `name`, `code`).
+- **ProcessControl**: Logs and monitors data processing jobs (`dateProcess`, `status`, `message`, `systemNumberId`).
 
 ## Running the Project
 1.  Ensure SQL Server is running and accessible (TCP/IP enabled on port 1433).

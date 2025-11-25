@@ -8,7 +8,7 @@ Defines the types of data imports available in the system (e.g., ETL, Ticket).
 |-------|------|-------------|
 | `id` | INTEGER | Primary Key, Auto-increment |
 | `name` | STRING | Name of the import type |
-| `description` | STRING | Description of the import type |
+| `code` | STRING | Unique code for the import type |
 
 ## Components
 

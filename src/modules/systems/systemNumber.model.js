@@ -1,36 +1,39 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
 
-const Site = sequelize.define('Site', {
+const SystemNumber = sequelize.define('SystemNumber', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
-    businessKey: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
     name: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    enabled: {
-        type: DataTypes.BOOLEAN,
+    number: {
+        type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: true,
     },
-    regionId: {
+    importDate: {
+        type: DataTypes.DATE,
+        allowNull: true,
+    },
+    siteConnectionId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    daysBack: {
         type: DataTypes.INTEGER,
         allowNull: true,
     },
-    companyId: {
+    daysForward: {
         type: DataTypes.INTEGER,
         allowNull: true,
     },
 }, {
-    tableName: 'Site', // Diagram says 'site (dw)', usually singular in diagram.
+    tableName: 'SystemNumber',
     timestamps: true,
 });
 
-module.exports = Site;
+module.exports = SystemNumber;

@@ -7,8 +7,9 @@ Manages Casino Sites configuration.
 | Field | Type | Description |
 |-------|------|-------------|
 | `id` | INTEGER | Primary Key, Auto-increment |
+| `businessKey` | STRING | Business identifier for the site |
 | `name` | STRING | Name of the site |
-| `connectionId` | INTEGER | ID of the associated database connection |
+| `enabled` | BOOLEAN | Whether the site is active (Default: true) |
 | `regionId` | INTEGER | ID of the region |
 | `companyId` | INTEGER | ID of the company |
 

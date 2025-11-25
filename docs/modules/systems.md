@@ -8,7 +8,7 @@ Manages external systems definitions.
 |-------|------|-------------|
 | `id` | INTEGER | Primary Key, Auto-increment |
 | `name` | STRING | Name of the system |
-| `systemCode` | STRING | Unique code for the system |
+| `code` | STRING | Unique code for the system |
 
 ## Components
 

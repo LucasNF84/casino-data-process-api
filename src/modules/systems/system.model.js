@@ -11,13 +11,13 @@ const System = sequelize.define('System', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    systemCode: {
+    code: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
     },
 }, {
-    tableName: 'Systems',
+    tableName: 'System',
     timestamps: true,
 });
 
