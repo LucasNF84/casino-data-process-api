@@ -12,3 +12,6 @@ API for the Casino DW Admin system.
 1. Install dependencies: `npm install`
 2. Configure `.env` file based on `.env.example`
 3. Run development server: `npm run dev`
+
+## Docker
+Se levanta junto con el front desde el `docker-compose.yml` del repo `casino-admin-suite`.
