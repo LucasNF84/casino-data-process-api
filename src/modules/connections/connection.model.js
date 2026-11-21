@@ -48,8 +48,9 @@ const Connection = sequelize.define('Connection', {
         allowNull: true,
     },
 }, {
-    tableName: 'Connection',
-    timestamps: true,
+    schema: 'dbo',
+    tableName: 'connection',
+    timestamps: false,
 });
 
 module.exports = Connection;

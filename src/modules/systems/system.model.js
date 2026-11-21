@@ -17,8 +17,9 @@ const System = sequelize.define('System', {
         unique: true,
     },
 }, {
-    tableName: 'System',
-    timestamps: true,
+    schema: 'dbo',
+    tableName: 'system',
+    timestamps: false,
 });
 
 module.exports = System;

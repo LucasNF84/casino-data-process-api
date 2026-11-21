@@ -16,7 +16,7 @@ const SystemNumber = sequelize.define('SystemNumber', {
         allowNull: false,
     },
     importDate: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: true,
     },
     siteConnectionId: {
@@ -32,8 +32,9 @@ const SystemNumber = sequelize.define('SystemNumber', {
         allowNull: true,
     },
 }, {
-    tableName: 'SystemNumber',
-    timestamps: true,
+    schema: 'dbo',
+    tableName: 'systemNumber',
+    timestamps: false,
 });
 
 module.exports = SystemNumber;

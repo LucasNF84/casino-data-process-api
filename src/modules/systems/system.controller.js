@@ -19,7 +19,17 @@ const create = async (req, res, next) => {
     }
 };
 
+const remove = async (req, res, next) => {
+    try {
+        await systemService.remove(req.params.id);
+        return success(res, null, 'System deleted successfully');
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     getAll,
     create,
+    remove,
 };

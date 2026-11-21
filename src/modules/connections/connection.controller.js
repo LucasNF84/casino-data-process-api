@@ -28,8 +28,18 @@ const update = async (req, res, next) => {
     }
 };
 
+const remove = async (req, res, next) => {
+    try {
+        await connectionService.remove(req.params.id);
+        return success(res, null, 'Connection deleted successfully');
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     getAll,
     create,
     update,
+    remove,
 };

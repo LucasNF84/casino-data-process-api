@@ -1,14 +1,14 @@
-# ImportTypes Module Documentation
+# Import Types Module Documentation
 
 ## Overview
-Defines the types of data imports available in the system (e.g., ETL, Ticket).
+Manages types of data imports (e.g., Contadores, Meters).
 
 ## Data Model (`ImportType`)
 | Field | Type | Description |
 |-------|------|-------------|
 | `id` | INTEGER | Primary Key, Auto-increment |
 | `name` | STRING | Name of the import type |
-| `code` | STRING | Unique code for the import type |
+| `code` | STRING | Unique code |
 
 ## Components
 
@@ -21,3 +21,14 @@ Defines the types of data imports available in the system (e.g., ETL, Ticket).
 - **GET** `/import-types`: List all import types.
 - **POST** `/import-types`: Create a new import type.
 - **PUT** `/import-types/:id`: Update an import type.
+
+### API Response Example (`GET /import-types`)
+```json
+[
+  {
+    "id": 1,
+    "name": "Contadores",
+    "code": 100
+  }
+]
+```

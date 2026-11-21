@@ -16,8 +16,9 @@ const SiteConnection = sequelize.define('SiteConnection', {
         allowNull: false,
     },
 }, {
-    tableName: 'SiteConnection',
-    timestamps: true,
+    schema: 'dbo',
+    tableName: 'siteConnection',
+    timestamps: false,
 });
 
 module.exports = SiteConnection;

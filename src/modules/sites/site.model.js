@@ -8,7 +8,7 @@ const Site = sequelize.define('Site', {
         autoIncrement: true,
     },
     businessKey: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: true,
     },
     name: {
@@ -28,9 +28,19 @@ const Site = sequelize.define('Site', {
         type: DataTypes.INTEGER,
         allowNull: true,
     },
+    createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: sequelize.literal('GETDATE()'),
+    },
+    updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: true,
+    },
 }, {
-    tableName: 'Site', // Diagram says 'site (dw)', usually singular in diagram.
-    timestamps: true,
+    schema: 'dw',
+    tableName: 'site',
+    timestamps: false,
 });
 
 module.exports = Site;

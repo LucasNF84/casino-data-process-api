@@ -5,6 +5,9 @@ const System = require('../modules/systems/system.model');
 const SystemNumber = require('../modules/systems/systemNumber.model');
 const ImportType = require('../modules/importTypes/importType.model');
 const ProcessControl = require('../modules/processControl/processControl.model');
+const Region = require('../modules/regions/region.model');
+const Company = require('../modules/companies/company.model');
+const SiteImportType = require('../modules/sites/siteImportType.model');
 
 const defineAssociations = () => {
     // System <-> Connection
@@ -31,6 +34,20 @@ const defineAssociations = () => {
 
     SystemNumber.hasMany(ProcessControl, { foreignKey: 'systemNumberId' });
     ProcessControl.belongsTo(SystemNumber, { foreignKey: 'systemNumberId' });
+
+    // Site <-> Region & Company
+    Site.belongsTo(Region, { foreignKey: 'regionId' });
+    Region.hasMany(Site, { foreignKey: 'regionId' });
+
+    Site.belongsTo(Company, { foreignKey: 'companyId' });
+    Company.hasMany(Site, { foreignKey: 'companyId' });
+
+    // Site <-> ImportType (Through SiteImportType)
+    Site.hasMany(SiteImportType, { foreignKey: 'siteId' });
+    SiteImportType.belongsTo(Site, { foreignKey: 'siteId' });
+
+    ImportType.hasMany(SiteImportType, { foreignKey: 'importTypeId' });
+    SiteImportType.belongsTo(ImportType, { foreignKey: 'importTypeId' });
 };
 
 module.exports = defineAssociations;

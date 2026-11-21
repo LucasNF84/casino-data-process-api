@@ -38,7 +38,8 @@ const ProcessControl = sequelize.define('ProcessControl', {
         allowNull: true,
     },
 }, {
-    tableName: 'Import', // Diagram says 'import (stg)'
+    schema: 'stg',
+    tableName: 'import',
     timestamps: true,
 });
 

@@ -17,8 +17,9 @@ const ImportType = sequelize.define('ImportType', {
         unique: true,
     },
 }, {
-    tableName: 'ImportType', // Diagram says 'importType (stg)'
-    timestamps: true,
+    schema: 'stg',
+    tableName: 'importType',
+    timestamps: false,
 });
 
 module.exports = ImportType;
