@@ -7,6 +7,9 @@ const sequelize = new Sequelize(config.db.name, config.db.user, config.db.passwo
     dialect: 'mssql',
     dialectModule: require('tedious'),
     logging: config.env === 'development' ? console.log : false,
+    // CasinoDW guarda las fechas (DATETIME) en hora de Argentina, sin zona horaria.
+    // Sin esto se leían como UTC y todas las fechas se veían 3 horas atrasadas.
+    timezone: '-03:00',
     pool: {
         max: 5,
         min: 0,
@@ -17,6 +20,7 @@ const sequelize = new Sequelize(config.db.name, config.db.user, config.db.passwo
         options: {
             encrypt: false, // Set to true if using Azure
             trustServerCertificate: true, // Set to true for local dev
+            useUTC: false, // interpreta los DATETIME en la zona del proceso (TZ del contenedor)
         },
     },
 });

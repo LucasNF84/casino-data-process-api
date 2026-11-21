@@ -17,7 +17,7 @@ const findAll = async () => {
                 include: [
                     {
                         model: Connection,
-                        attributes: ['id', 'name']
+                        attributes: ['id', 'name', 'systemId']
                     },
                     {
                         model: SystemNumber
@@ -47,7 +47,7 @@ const findById = async (id, transaction = null) => {
                 include: [
                     {
                         model: Connection,
-                        attributes: ['id', 'name']
+                        attributes: ['id', 'name', 'systemId']
                     },
                     {
                         model: SystemNumber
