@@ -2,64 +2,35 @@ const jwt = require('jsonwebtoken');
 const User = require('./user.model');
 const config = require('../../config/env');
 
-const register = async (data) => {
-    const { username, email, password, registrationCode } = data;
-
-    // Validate registration code
-    const requiredCode = config.registrationCode || 'Casino777';
-    if (registrationCode !== requiredCode) {
-        throw new Error('Invalid registration code');
-    }
-
-    // Check if user already exists
-    const existingUser = await User.findOne({
-        where: { email }
-    });
-
-    if (existingUser) {
-        throw new Error('User already exists with this email');
-    }
-
-    // Create user (password will be hashed by model hook)
-    const user = await User.create({
-        username,
-        email,
-        password,
-        registrationCode,
-    });
-
-    // Generate token
-    const token = generateToken(user);
-
-    return {
-        user: {
-            id: user.id,
-            username: user.username,
-            email: user.email,
-            isActive: user.isActive,
-        },
-        token,
-    };
+// Error con código HTTP para que el errorHandler no devuelva 500
+const httpError = (statusCode, message) => {
+    const err = new Error(message);
+    err.statusCode = statusCode;
+    return err;
 };
 
 const login = async (email, password) => {
+    if (!email || !password) {
+        throw httpError(400, 'email and password are required');
+    }
+
     // Find user
     const user = await User.findOne({ where: { email } });
 
     if (!user) {
-        throw new Error('Invalid credentials');
+        throw httpError(401, 'Invalid credentials');
     }
 
     // Check if user is active
     if (!user.isActive) {
-        throw new Error('Account is inactive');
+        throw httpError(403, 'Account is inactive');
     }
 
     // Verify password
     const isMatch = await user.comparePassword(password);
 
     if (!isMatch) {
-        throw new Error('Invalid credentials');
+        throw httpError(401, 'Invalid credentials');
     }
 
     // Generate token
@@ -91,7 +62,7 @@ const getUserById = async (id) => {
     });
 
     if (!user) {
-        throw new Error('User not found');
+        throw httpError(404, 'User not found');
     }
 
     return user;
@@ -111,7 +82,7 @@ const generateToken = (user) => {
 };
 
 module.exports = {
-    register,
+    httpError,
     login,
     verifyToken,
     getUserById,

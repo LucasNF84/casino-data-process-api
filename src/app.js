@@ -6,6 +6,15 @@ const routes = require('./routes');
 const errorHandler = require('./core/errorHandler');
 const { error } = require('./core/responseBuilder');
 const defineAssociations = require('./core/associations');
+const authMiddleware = require('./middleware/authMiddleware');
+
+// Rutas que no requieren token. Todo lo demás bajo /api exige un JWT válido.
+const PUBLIC_ROUTES = ['POST /login'];
+
+const requireAuth = (req, res, next) => {
+    if (PUBLIC_ROUTES.includes(`${req.method} ${req.path}`)) return next();
+    return authMiddleware(req, res, next);
+};
 
 const app = express();
 
@@ -20,7 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
 // Routes
-app.use('/api', routes);
+app.use('/api', requireAuth, routes);
 
 // 404 Handler
 app.use((req, res, next) => {

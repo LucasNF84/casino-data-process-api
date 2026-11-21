@@ -14,7 +14,11 @@ module.exports = {
     user: process.env.DB_USER || 'sa',
     password: process.env.DB_PASS || 'your_password',
   },
-  jwtSecret: process.env.JWT_SECRET || 'your-secret-key-change-this-in-production',
+  jwtSecret: process.env.JWT_SECRET,
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '24h',
-  registrationCode: process.env.REGISTRATION_CODE || 'Casino777',
 };
+
+// Sin secreto propio cualquiera podría firmar tokens válidos: no se arranca.
+if (!module.exports.jwtSecret || module.exports.jwtSecret.length < 32) {
+  throw new Error('JWT_SECRET no está definido en el .env o tiene menos de 32 caracteres');
+}

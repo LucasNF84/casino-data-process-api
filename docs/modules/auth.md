@@ -1,127 +1,52 @@
-# Authentication Module Documentation
+# Auth Module Documentation
 
 ## Overview
-JWT-based authentication system with registration code validation.
+Login con JWT para los usuarios que administran el DW (tabla `dbo.user` de CasinoDW).
+
+**No hay registro público.** Los usuarios se dan de alta:
+- desde la pantalla **Usuarios** de la plataforma (módulo `users`, requiere estar logueado), o
+- con el script `src/scripts/createUser.js` (primer usuario o recuperar el acceso).
+
+## Protección de rutas
+Todas las rutas bajo `/api` exigen `Authorization: Bearer <token>`, excepto `POST /api/login`.
+Se aplica una sola vez en `src/app.js` (`requireAuth` + `PUBLIC_ROUTES`), así que un módulo nuevo queda protegido sin hacer nada.
 
 ## Endpoints
 
-### POST /auth/register
-Register a new user with validation code.
-
-**Request Body:**
+### POST /login (público)
 ```json
-{
-  "username": "johndoe",
-  "email": "john@example.com",
-  "password": "SecurePass123!",
-  "registrationCode": "Casino777"
-}
+{ "email": "admin@casinoclub.com.ar", "password": "********" }
 ```
 
-**Response (201):**
-```json
-{
-  "success": true,
-  "message": "User registered successfully",
-  "data": {
-    "user": {
-      "id": 1,
-      "username": "johndoe",
-      "email": "john@example.com",
-      "isActive": true
-    },
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-  }
-}
-```
-
-**Error Responses:**
-- **400** - Invalid registration code
-- **409** - User already exists
-
----
-
-### POST /auth/login
-Authenticate and receive JWT token.
-
-**Request Body:**
-```json
-{
-  "email": "john@example.com",
-  "password": "SecurePass123!"
-}
-```
-
-**Response (200):**
+**200:**
 ```json
 {
   "success": true,
   "message": "Login successful",
   "data": {
-    "user": {
-      "id": 1,
-      "username": "johndoe",
-      "email": "john@example.com",
-      "isActive": true
-    },
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    "user": { "id": 1, "username": "admin", "email": "admin@casinoclub.com.ar", "isActive": true },
+    "token": "eyJhbGciOi..."
   }
 }
 ```
 
-**Error Responses:**
-- **401** - Invalid credentials
-- **403** - Account inactive
+**Errores:** `400` faltan datos · `401` credenciales inválidas · `403` usuario desactivado
 
----
+### GET /me
+Devuelve el usuario del token. `401` si no hay token o es inválido/vencido.
 
-### GET /auth/me
-Get current authenticated user information.
-
-**Headers:**
+## Primer usuario / recuperar acceso
+```sh
+docker exec -it cdp-api node src/scripts/createUser.js
 ```
-Authorization: Bearer <token>
-```
+Pide email, usuario y contraseña (oculta). Si el email ya existe, le cambia la contraseña y lo activa.
 
-**Response (200):**
-```json
-{
-  "success": true,
-  "message": "User retrieved successfully",
-  "data": {
-    "id": 1,
-    "username": "johndoe",
-    "email": "john@example.com",
-    "isActive": true,
-    "createdAt": "2025-12-02T16:30:00.000Z"
-  }
-}
-```
-
-**Error Responses:**
-- **401** - No token provided / Invalid token
-
-## Protected Routes
-
-To protect any route, use the `authMiddleware`:
-
-```javascript
-const authMiddleware = require('../../middleware/authMiddleware');
-
-router.get('/protected-route', authMiddleware, controller.method);
-```
-
-## Environment Variables
-
+## Variables de entorno
 ```env
-JWT_SECRET=your-super-secret-jwt-key-min-32-characters
+JWT_SECRET=<mínimo 32 caracteres, obligatorio: la API no arranca sin él>
 JWT_EXPIRES_IN=24h
-REGISTRATION_CODE=Casino777
 ```
 
-## Security Notes
-
-- Passwords are hashed using bcrypt (10 salt rounds)
-- JWT tokens expire after configured time (default: 24h)
-- Registration requires valid code to prevent unauthorized signups
-- Tokens must be sent in `Authorization: Bearer <token>` header
+## Notas de seguridad
+- Contraseñas con bcrypt (10 rounds), mínimo 8 caracteres.
+- Los tokens vencen según `JWT_EXPIRES_IN`; el front cierra la sesión ante un 401.
